@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+    <title>Frontend Mentor | E-commerce product page</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+    <title>Frontend Mentor | E-commerce product page</title>
+</head>
+<body>
+    <div class="load" id="load">
+        <img src="./images/bravo.gif" alt="">
+    </div>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="menu">
+                    <a href="#" class="element-menu burger" id="burger">
+                        <img src="./images/icon-menu.svg" alt="">
+                    </a>
+                    <a href="index.html" class="element-menu logo">
+                        <img src="./images/logo.svg" alt="">
+                    </a>
+                    <nav id="nav">
+                        <ul>
+                            <li><a href="#" class="close"><img src="./images/icon-close.svg" alt=""></a></li>
+                            <li><a href="index.html" class="active">Collections</a></li>
+                            <li><a href="#">Men</a></li>
+                            <li><a href="#">Women</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="user-content">
+                    <div class="element-menu cart">
+                        <a href="#" id="cart">
+                            <img src="./images/icon-cart.svg" alt="">
+                            <div id="notify"></div>
+                        </a>
+                        <div class="cart-content" id="cart-content">
+                            <div class="cart-header">
+                                Cart
+                            </div>
+                            <div class="cart-body" id="cart-body"></div>
+                        </div>
+                    </div>
+                    <div class="element-menu avatar">
+                        <a href="#">
+                            <img src="./images/image-avatar.png" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="articles" id="article-content">
+            <article class="article-illustration">
+                <div class="illustration" id="illustration"></div>
+                <div class="navigator" id="navigator"></div>
+                <div class="controls" id="controls">                          
+                    <span id="prev" class="prev">
+                        <img src="./images/icon-previous.svg" alt="">
+                    </span>
+                    <span id="next" class="next">
+                        <img src="./images/icon-next.svg" alt="">
+                    </span>
+                </div>
+            </article>
+            <article class="desc">
+                <div class="container">
+                    <p class="desc-company" id="company"></p>
+                    <h2 class="desc-title" id="title"></h2>
+                    <p class="desc-desciption" id="description"></p>
+                    <div class="desc-price" id="price"></div>
+                    <div class="col">
+                        <form>
+                            <button type="button" id="minus">
+                                <img src="./images/icon-minus.svg" alt="">
+                            </button>
+                            <input type="number" name="nb" min="1" value="1" id="nb">
+                            <button type="button" id="plus">
+                                <img src="./images/icon-plus.svg" alt="">
+                            </button>
+                        </form>
+                        <a href="#" class="btn btn-theme" id="add"> <img src="./images/icon-cart-white.svg" alt=""> Add to cart</a>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </main>
+    <footer>
+        <div class="attribution">
+            Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+            Coded by <a href="https://www.linkedin.com/in/victoire-ondelet/" target="_blank">Victoire ONDELET</a>.
+          </div>
+    </footer>
+
+    <script>
+        if(!localStorage.getItem('carts')){
+            localStorage.setItem('carts', JSON.stringify([]));
+        }
+
+        const article = {
+            id: 1,
+            title: "Fall limited edition sneakers",
+            company: "Sneaker company",
+            desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae nobis quos consequuntur sint architecto? Eius dolor culpa impedit mollitia maxime.",
+            price: 250.00,
+            reduc: 50,
+            images : [
+                {bg: "./images/image-product-1.jpg", thumbnail: "./images/image-product-1-thumbnail.jpg"},
+                {bg: "./images/image-product-2.jpg", thumbnail: "./images/image-product-2-thumbnail.jpg"},
+                {bg: "./images/image-product-3.jpg", thumbnail: "./images/image-product-3-thumbnail.jpg"},
+                {bg: "./images/image-product-4.jpg", thumbnail: "./images/image-product-4-thumbnail.jpg"},
+            ]
+        };
+
+        const $company = document.querySelector('#company');
+        const $title = document.querySelector('#title');
+        const $description = document.querySelector('#description');
+        const $price = document.querySelector('#price');
+        const $illustration = document.querySelector('#illustration');
+
+        $company.insertAdjacentHTML("beforeend", article.company);
+        $title.insertAdjacentHTML("beforeend", article.title);
+        $description.insertAdjacentHTML("beforeend", article.desc);
+
+        if(!article.reduc){
+            $price.insertAdjacentHTML("beforeend", `
+                <p>
+                    <span class="price">$${article.price}</span>
+                </p>
+            `);
+
+        }
+        else {
+            $price.insertAdjacentHTML("beforeend", `
+                <p>
+                    <span class="price">$${(article.price-((article.price*article.reduc)/100))}</span>
+                    <span class="reduc">${article.reduc}%</span>
+                </p>
+                <p class="init-price">
+                    $${article.price}
+                </p>
+            `);
+        }
+
+        $description.insertAdjacentHTML("beforeend", article.desc);
+
+        $illustration.innerHTML="";
+        article.images.forEach(element => {
+            $illustration.insertAdjacentHTML("beforeend", `
+                <img src="${element.bg}" alt="">
+            `);
+        });
+
+        
+    </script>
+    <script src="./script.js"></script>
+    <script src="./dinamic-slider.js"></script>
+</body>
+</html>
